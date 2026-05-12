@@ -7,11 +7,20 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-
+ 
 <!-- NAV -->
 <nav id="navbar">
   <a class="nav-logo" href="index.html">
-    <span class="logo-dot"></span>
+    <svg class="logo-svg" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <!-- Gear -->
+      <path d="M24 8 L26.5 4 L21.5 4 L24 8Z M36 12 L40 10 L37 6 L33.5 9.5Z M40 24 L44 21.5 L44 26.5 L40 24Z M36 36 L37 40 L40 42 L40 37.5Z M24 40 L21.5 44 L26.5 44 L24 40Z M12 36 L8 37.5 L8 42 L11 40Z M8 24 L4 26.5 L4 21.5 L8 24Z M12 12 L10.5 9.5 L7 6 L11 10Z"
+        fill="#FF3D2E" opacity=".9"/>
+      <circle cx="24" cy="24" r="14" fill="none" stroke="#FF3D2E" stroke-width="3.5"/>
+      <circle cx="24" cy="24" r="8"  fill="none" stroke="#FF3D2E" stroke-width="2"/>
+      <!-- Pulse line through center -->
+      <polyline points="12,24 17,24 19,18 21,30 23,20 25,28 27,24 36,24"
+        fill="none" stroke="#1A0A04" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
     <span class="logo-p">PULSE</span><span class="logo-g">GEAR</span>
   </a>
   <div class="nav-links">
@@ -24,7 +33,7 @@
     <button id="nav-logout" class="btn btn-p" style="display:none" onclick="logout()">LOGOUT</button>
   </div>
 </nav>
-
+ 
 <!-- HERO -->
 <section class="hero">
   <!-- Floating tech icons — warm ColorSizzle palette -->
@@ -82,29 +91,29 @@
       <polygon points="14,10 14,58 28,44 36,64 46,60 38,40 56,40" fill="rgba(255,61,46,.1)" stroke="#FF3D2E" stroke-width="3" stroke-linejoin="round"/>
     </svg>
   </div>
-
+ 
   <div class="hero-content pg-hero-enter">
     <!-- Main title -->
-    <h1 id="store-heading">PULSEGEAR</h1>
-
+    <h1 id="store-heading"><span class="h-pulse">PULSE</span><span class="h-gear">GEAR</span></h1>
+ 
     <!-- Tagline -->
-    <p class="hero-sub" id="hero-tagline">Next-gen tech. Delivered to your door.</p>
-
+    <p class="hero-sub" id="hero-tagline"><em>Next-gen tech.</em> Delivered to your door.</p>
+ 
     <!-- Trust badges -->
     <div class="hero-badges">
       <span>⚡ Fast Delivery</span>
       <span>🔒 Secure Checkout</span>
       <span>📦 COD Available</span>
     </div>
-
+ 
     <!-- CTA -->
     <button class="btn-browse" onclick="scrollToProducts()">Shop Now →</button>
-
+ 
   </div>
-
+ 
   <div id="particles" style="position:absolute;inset:0;pointer-events:none;z-index:1"></div>
 </section>
-
+ 
 <!-- MARQUEE -->
 <div class="marquee-bar" aria-hidden="true">
   <div class="marquee-track">
@@ -112,13 +121,13 @@
     <span>Fast Delivery <span class="marquee-star">✦</span> Secure Checkout <span class="marquee-star">✦</span> COD Available <span class="marquee-star">✦</span> Next-Gen Tech <span class="marquee-star">✦</span> Top Brands <span class="marquee-star">✦</span> Best Prices <span class="marquee-star">✦</span> 100% Genuine <span class="marquee-star">✦</span> Pakistan Wide Delivery <span class="marquee-star">✦</span></span>
   </div>
 </div>
-
+ 
 <!-- CATEGORY BADGES -->
 <section class="cat-badges-section" id="cat-badges-section">
   <p class="cat-section-title">— Shop by Category —</p>
   <div id="cat-badges-row"></div>
 </section>
-
+ 
 <!-- PRODUCTS -->
 <section class="products-section" id="products-section">
   <div class="section-head pg-reveal">
@@ -129,7 +138,7 @@
   <div id="filter-bar"></div>
   <div id="products-grid"></div>
 </section>
-
+ 
 <!-- CHECKOUT MODAL -->
 <div id="checkout-modal" class="modal-overlay" style="display:none">
   <div class="modal-box">
@@ -150,7 +159,7 @@
     </form>
   </div>
 </div>
-
+ 
 <!-- SUCCESS MODAL -->
 <div id="success-modal" class="modal-overlay" style="display:none">
   <div class="modal-box text-center">
@@ -161,7 +170,7 @@
     <button class="btn" onclick="closeModal('success-modal')">Continue Shopping</button>
   </div>
 </div>
-
+ 
 <!-- LOGIN GUARD -->
 <div id="login-guard" class="modal-overlay" style="display:none">
   <div class="modal-box text-center">
@@ -171,19 +180,19 @@
     <button class="btn-ghost" onclick="closeModal('login-guard')">Cancel</button>
   </div>
 </div>
-
+ 
 <footer>
   <p id="footer-name">© 2026 PulseGear Pakistan · All rights reserved</p>
 </footer>
-
+ 
 <script src="js/config.js"></script>
 <script src="js/auth.js"></script>
 <script>
 let selProduct = null;
-
+ 
 async function init() {
   await loadSettings();
-
+ 
   // Store name
   const name = SETTINGS.store_name || 'PulseGear';
   document.title = name;
@@ -191,34 +200,34 @@ async function init() {
   h.textContent = name.toUpperCase();
   document.getElementById('hero-tagline').textContent = SETTINGS.hero_tagline || 'Next-gen tech. Delivered to your door.';
   document.getElementById('footer-name').textContent = `© ${new Date().getFullYear()} ${name} Pakistan · All rights reserved`;
-
+ 
   // Nav logo
   const half = Math.ceil(name.length / 2);
   document.querySelector('.nav-logo').innerHTML =
     `<span class="logo-dot"></span><span class="logo-p">${name.slice(0,half).toUpperCase()}</span><span class="logo-g">${name.slice(half).toUpperCase()}</span>`;
-
+ 
   await loadCategoryBadges();
   await loadProducts();
   spawnParticles();
 }
-
+ 
 async function loadProducts(filterCat) {
   let q = sb().from('products').select('*').eq('active', true).order('created_at', { ascending: false });
   if (filterCat && filterCat !== 'all') q = q.eq('category', filterCat);
   const { data: prods } = await q;
-
+ 
   const grid = document.getElementById('products-grid');
   const fbar = document.getElementById('filter-bar');
-
+ 
   // Collect all cats for filter bar (always load all for that)
   const { data: allProds } = await sb().from('products').select('category').eq('active', true);
   const cats = new Set(['all']);
   (allProds || []).forEach(p => { if (p.category) cats.add(p.category.toLowerCase()) });
-
+ 
   fbar.innerHTML = [...cats].map(c =>
     `<button class="filter-btn${(!filterCat && c==='all') || filterCat===c ? ' active' : ''}" onclick="filterProducts('${c}',this)">${c === 'all' ? 'All Products' : c.charAt(0).toUpperCase()+c.slice(1)}</button>`
   ).join('');
-
+ 
   if (!prods || !prods.length) {
     grid.innerHTML = `
       <div class="empty-state">
@@ -228,7 +237,7 @@ async function loadProducts(filterCat) {
       </div>`;
     return;
   }
-
+ 
   grid.innerHTML = prods.map((p, i) => `
     <div class="product-card" data-cat="${(p.category||'').toLowerCase()}" style="animation-delay:${i*0.07}s">
       <div class="card-img">
@@ -252,7 +261,7 @@ async function loadProducts(filterCat) {
       </div>
     </div>`).join('');
 }
-
+ 
 function filterProducts(cat, btn) {
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   if (btn) btn.classList.add('active');
@@ -261,7 +270,7 @@ function filterProducts(cat, btn) {
     c.style.display = (cat === 'all' || c.dataset.cat === cat) ? '' : 'none';
   });
 }
-
+ 
 function openCheckout(p) {
   if (!currentUser) {
     document.getElementById('login-guard').style.display = 'flex';
@@ -271,7 +280,7 @@ function openCheckout(p) {
   selProduct = p;
   document.getElementById('checkout-summary').innerHTML =
     `<strong>${p.name}</strong><br><span style="color:var(--red);font-family:var(--F1);font-size:1.1rem;font-weight:900">Rs. ${Number(p.price).toLocaleString()}</span>`;
-
+ 
   const payMethods = SETTINGS.payment_methods || ['COD'];
   document.getElementById('pay-opts').innerHTML = payMethods.map(m =>
     `<label class="pay-opt"><input type="radio" name="pay" value="${m}" onchange="showPayInfo('${m}')"/> ${m}</label>`
@@ -283,7 +292,7 @@ function openCheckout(p) {
   document.getElementById('checkout-modal').style.display = 'flex';
   document.body.style.overflow = 'hidden';
 }
-
+ 
 function showPayInfo(method) {
   const box = document.getElementById('pay-info');
   const info = {
@@ -294,7 +303,7 @@ function showPayInfo(method) {
   box.textContent = info[method] || '';
   box.style.display = 'block';
 }
-
+ 
 async function placeOrder(e) {
   e.preventDefault();
   const pay = document.querySelector('input[name=pay]:checked')?.value;
@@ -325,7 +334,7 @@ async function placeOrder(e) {
   document.getElementById('suc-orderid').textContent = 'Order ID: ' + orderId;
   document.getElementById('success-modal').style.display = 'flex';
 }
-
+ 
 function closeModal(id) {
   document.getElementById(id).style.display = 'none';
   document.body.style.overflow = '';
@@ -334,7 +343,7 @@ function showErr(id, msg) {
   const el = document.getElementById(id);
   el.textContent = msg; el.style.display = 'block';
 }
-
+ 
 function spawnParticles() {
   const c = document.getElementById('particles');
   const colors = ['#FF3D2E','#FFB627','#FF6B2E','#1F7A3A','#5B1A3A'];
@@ -344,7 +353,7 @@ function spawnParticles() {
     c.appendChild(p);
   }
 }
-
+ 
 document.addEventListener('click', e => {
   if (e.target.id === 'checkout-modal') closeModal('checkout-modal');
   if (e.target.id === 'login-guard')    closeModal('login-guard');
@@ -352,11 +361,11 @@ document.addEventListener('click', e => {
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') ['checkout-modal','success-modal','login-guard'].forEach(closeModal);
 });
-
+ 
 function scrollToProducts() {
   document.getElementById('products-section').scrollIntoView({ behavior: 'smooth' });
 }
-
+ 
 async function loadCategoryBadges() {
   const { data: cats } = await sb().from('categories').select('*').eq('active', true).order('sort_order', { ascending: true });
   const row = document.getElementById('cat-badges-row');
@@ -375,7 +384,7 @@ async function loadCategoryBadges() {
       <span class="cat-badge-label">${c.name}</span>
     </div>`).join('');
 }
-
+ 
 function filterByCat(slug, el) {
   document.querySelectorAll('.cat-badge').forEach(b => b.classList.remove('active'));
   if (el) el.classList.add('active');
@@ -386,16 +395,16 @@ function filterByCat(slug, el) {
     b.classList.toggle('active', b.textContent.toLowerCase().includes(slug === 'all' ? 'all' : slug));
   });
 }
-
+ 
 document.addEventListener('DOMContentLoaded', init);
 </script>
-
+ 
 <script>
 /* Nav scroll */
 window.addEventListener('scroll', () => {
   document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
 }, {passive: true});
-
+ 
 /* Scroll reveal + badge stagger */
 (function(){
   const revealIO = new IntersectionObserver(entries => {
@@ -403,10 +412,10 @@ window.addEventListener('scroll', () => {
       if (e.isIntersecting) { e.target.classList.add('pg-in'); revealIO.unobserve(e.target); }
     });
   }, {threshold: 0.1});
-
+ 
   document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.pg-reveal').forEach(el => revealIO.observe(el));
-
+ 
     // Badge stagger via MutationObserver
     const row = document.getElementById('cat-badges-row');
     if (row) {
@@ -414,7 +423,7 @@ window.addEventListener('scroll', () => {
         document.querySelectorAll('.cat-badge').forEach((b, i) =>
           setTimeout(() => b.classList.add('pg-badge-in'), i * 110));
       }).observe(row, {childList: true});
-
+ 
       new IntersectionObserver(entries => {
         entries.forEach(e => {
           if (e.isIntersecting)
@@ -426,6 +435,6 @@ window.addEventListener('scroll', () => {
   });
 })();
 </script>
-
+ 
 </body>
-</html>
+</html
