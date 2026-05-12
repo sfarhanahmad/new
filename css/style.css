@@ -1,4 +1,4 @@
- /* ============ KILL OLD GLITCH STYLES ============ */
+/* ============ KILL OLD GLITCH STYLES ============ */
 .glitch, #store-heading {
   background: none !important;
   -webkit-text-fill-color: unset !important;
@@ -697,4 +697,3 @@ footer {
   border-color: rgba(255,182,39,.35);
   color: #8B5E00;
 }
- 
