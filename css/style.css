@@ -1,4 +1,4 @@
-
+ 
 /* ============ KILL OLD GLITCH STYLES ============ */
 .glitch, #store-heading {
   background: none !important;
@@ -9,9 +9,9 @@
   padding: 0 !important;
 }
 .glitch::before, .glitch::after { display: none !important }
-
+ 
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,700&family=Inter:wght@400;500;600;700&display=swap');
-
+ 
 /* ============ TOKENS ============ */
 :root {
   --red:    #FF3D2E;
@@ -32,7 +32,7 @@
   --shadow: 0 24px 48px -16px rgba(26,10,4,.18);
   --shadow-lg: 0 32px 64px -20px rgba(26,10,4,.28);
 }
-
+ 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0 }
 html { scroll-behavior: smooth; background: var(--cream) }
 body {
@@ -47,7 +47,7 @@ a { color: inherit; text-decoration: none }
 img, svg { max-width: 100%; display: block }
 button { font: inherit; cursor: pointer; border: none; background: none; color: inherit }
 ::selection { background: var(--red); color: var(--cream) }
-
+ 
 /* ============ NAV ============ */
 nav#navbar {
   position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
@@ -91,7 +91,7 @@ nav#navbar {
 .nav-links a:hover::after, .nav-links a.active::after { width: 100% }
 .nav-auth { display: flex; align-items: center; gap: .75rem }
 .nav-user { font-size: .85rem; font-weight: 600; color: var(--red) }
-
+ 
 /* ============ BUTTONS ============ */
 .btn {
   font-family: var(--F2); font-size: .85rem; font-weight: 700;
@@ -113,7 +113,7 @@ nav#navbar {
   display: inline-block; transition: all .2s;
 }
 .btn-ghost:hover { border-color: var(--dark); color: var(--dark) }
-
+ 
 /* ============ HERO ============ */
 .hero {
   position: relative; min-height: 100vh;
@@ -125,7 +125,7 @@ nav#navbar {
     var(--cream);
 }
 .hero-content { position: relative; z-index: 2; max-width: 860px; padding: 0 1.5rem }
-
+ 
 #store-heading {
   font-family: var(--F1);
   font-size: clamp(3.2rem, 11vw, 8.5rem);
@@ -167,7 +167,7 @@ nav#navbar {
 }
 .btn-browse:hover { transform: translateY(-3px); box-shadow: 0 18px 40px rgba(26,10,4,.3) }
 .btn-browse:hover::before { opacity: 1 }
-
+ 
 /* Floating tech icons */
 .pg-float {
   position: absolute; pointer-events: none;
@@ -186,14 +186,14 @@ nav#navbar {
   0%,100% { transform: translateY(0) rotate(0deg) }
   50%      { transform: translateY(-18px) rotate(6deg) }
 }
-
+ 
 /* Particles */
 .particle {
   position: absolute; width: 5px; height: 5px; border-radius: 50%;
   background: var(--red); animation: particleFloat linear infinite; opacity: .15;
 }
 @keyframes particleFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-14px)} }
-
+ 
 /* ============ MARQUEE ============ */
 .marquee-bar {
   background: var(--dark); color: var(--cream);
@@ -208,7 +208,7 @@ nav#navbar {
 .marquee-track span { display: inline-flex; align-items: center; gap: 2.5rem }
 .marquee-star { color: var(--yellow); font-style: normal }
 @keyframes marqueeScroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
-
+ 
 /* ============ CATEGORY BADGES ============ */
 .cat-badges-section {
   position: relative; z-index: 2;
@@ -253,7 +253,7 @@ nav#navbar {
 }
 .cat-badge:hover .cat-badge-label,
 .cat-badge.active .cat-badge-label { color: var(--red) }
-
+ 
 /* ============ PRODUCTS ============ */
 .products-section {
   position: relative; z-index: 2;
@@ -278,7 +278,7 @@ nav#navbar {
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.5rem;
 }
-
+ 
 /* Product Card */
 .product-card {
   background: #fff; border: 1.5px solid var(--bord);
@@ -333,7 +333,7 @@ nav#navbar {
   font-size: .72rem; font-weight: 700; color: var(--mute);
   border: 1.5px solid var(--bord); padding: .4rem .9rem; border-radius: 999px;
 }
-
+ 
 /* ============ MODAL ============ */
 .modal-overlay {
   position: fixed; inset: 0; background: rgba(26,10,4,.55);
@@ -378,7 +378,7 @@ nav#navbar {
   0%,100%{ box-shadow:0 0 0 0 rgba(31,122,58,.4) }
   50%    { box-shadow:0 0 0 16px rgba(31,122,58,0) }
 }
-
+ 
 /* ============ FORM ============ */
 .fg { margin-bottom: 1rem }
 .fg label {
@@ -422,7 +422,7 @@ nav#navbar {
   color: var(--green); font-size: .8rem; padding: .7rem 1rem;
   border-radius: 10px; margin-bottom: 1rem; display: none;
 }
-
+ 
 /* ============ AUTH PAGE ============ */
 .auth-page {
   min-height: 100vh; display: flex; align-items: center;
@@ -445,7 +445,7 @@ nav#navbar {
 }
 .auth-switch { text-align: center; margin-top: 1.1rem; font-size: .84rem; color: var(--mute) }
 .auth-switch a { color: var(--red); font-weight: 700 }
-
+ 
 /* ============ ORDERS PAGE ============ */
 .page-wrap { max-width: 1100px; margin: 0 auto; padding: 90px 2rem 3rem; position: relative; z-index: 2 }
 .page-title {
@@ -469,7 +469,7 @@ nav#navbar {
 .s-shipped  { background:rgba(255,107,46,.1);  color:var(--orange); border:1px solid rgba(255,107,46,.3) }
 .s-delivered{ background:rgba(31,122,58,.1);   color:var(--green);  border:1px solid rgba(31,122,58,.3) }
 .s-cancelled{ background:rgba(255,61,46,.1);   color:var(--red);    border:1px solid rgba(255,61,46,.3) }
-
+ 
 /* ============ ADMIN ============ */
 .admin-layout { display: flex; min-height: 100vh; padding-top: 64px; position: relative; z-index: 2 }
 .admin-sidebar {
@@ -535,14 +535,14 @@ nav#navbar {
 .prod-admin-price { font-size: .92rem; font-weight: 700; color: var(--red); margin-bottom: .75rem }
 .prod-admin-actions { display: flex; gap: .5rem }
 .settings-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(320px,1fr)); gap: 1.25rem }
-
+ 
 /* ============ FOOTER ============ */
 footer {
   position: relative; z-index: 2; text-align: center;
   padding: 1.75rem; background: var(--dark);
   color: rgba(255,248,236,.5); font-size: .82rem; font-weight: 500;
 }
-
+ 
 /* ============ RESPONSIVE ============ */
 @media(max-width:768px) {
   nav#navbar { padding: 0 1rem }
@@ -555,21 +555,21 @@ footer {
   .auth-box { padding: 2rem 1.25rem }
   .pg-float { display: none }
 }
-
+ 
 /* ============ ANIMATIONS ============ */
 @keyframes fadeIn   { from{opacity:0}             to{opacity:1} }
 @keyframes slideUp  { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:none} }
-
+ 
 .product-card:nth-child(1){animation-delay:.04s}
 .product-card:nth-child(2){animation-delay:.09s}
 .product-card:nth-child(3){animation-delay:.14s}
 .product-card:nth-child(4){animation-delay:.19s}
 .product-card:nth-child(5){animation-delay:.24s}
 .product-card:nth-child(6){animation-delay:.29s}
-
+ 
 @keyframes statusFlash{0%{background:rgba(255,61,46,.12)}100%{background:transparent}}
 .status-updated td { animation: statusFlash .6s ease }
-
+ 
 /* ============ HERO ENTRANCE ============ */
 @keyframes pgWordRise {
   from { opacity:0; transform:translateY(28px) }
@@ -584,11 +584,11 @@ footer {
 .pg-hero-enter .hero-badges span:nth-child(1){ animation-delay:.9s }
 .pg-hero-enter .hero-badges span:nth-child(2){ animation-delay:1.05s }
 .pg-hero-enter .hero-badges span:nth-child(3){ animation-delay:1.2s }
-
+ 
 /* ============ SCROLL REVEAL ============ */
 .pg-reveal { opacity:0; transform:translateY(32px); transition:opacity .85s var(--ease),transform .85s var(--ease) }
 .pg-reveal.pg-in { opacity:1; transform:none }
-
+ 
 /* ============ REDUCED MOTION ============ */
 @media(prefers-reduced-motion:reduce) {
   *, *::before, *::after { animation-duration:.01ms!important; transition-duration:.01ms!important }
@@ -600,9 +600,9 @@ footer {
   }
   .cat-badge { opacity:1; transform:none; transition:none }
 }
-
-
-
+ 
+ 
+ 
 /* ============ PRODUCTS SECTION HEADER ============ */
 .section-head {
   text-align: center; margin-bottom: 2.5rem;
@@ -620,26 +620,26 @@ footer {
 .section-head p {
   color: var(--mute); font-size: 1rem; max-width: 500px; margin: 0 auto;
 }
-
+ 
 /* Fix filter bar to go with section head */
 #filter-bar {
   justify-content: center !important;
   margin-bottom: 2.5rem !important;
 }
-
+ 
 /* Richer product grid */
 #products-grid {
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)) !important;
   gap: 1.75rem !important;
 }
-
+ 
 /* Taller card image */
 .card-img { height: 220px !important }
 .card-img img { height: 220px !important }
-
+ 
 /* Card price with Rs. prefix */
 .card-price { font-size: 1.25rem !important }
-
+ 
 /* Empty state */
 .empty-state {
   grid-column: 1/-1; text-align: center; padding: 80px 20px;
@@ -647,7 +647,7 @@ footer {
 .empty-state-icon { font-size: 4rem; margin-bottom: 1rem }
 .empty-state h3 { font-family: var(--F1); font-size: 1.5rem; color: var(--dark); margin-bottom: .5rem }
 .empty-state p { color: var(--mute) }
-
+ 
 /* Category section title */
 .cat-section-title {
   text-align: center; margin-bottom: 1.75rem;
@@ -655,3 +655,47 @@ footer {
   font-weight: 700; color: var(--mute);
   letter-spacing: .04em;
 }
+ 
+/* ============ NAV LOGO SVG ============ */
+.logo-svg {
+  width: 32px; height: 32px; flex-shrink: 0;
+  transition: transform .4s var(--ease);
+}
+.nav-logo:hover .logo-svg { transform: rotate(30deg) }
+ 
+/* ============ HERO HEADING TWO-TONE ============ */
+.h-pulse {
+  color: var(--red);
+  font-style: italic;
+  display: inline;
+}
+.h-gear {
+  color: var(--dark);
+  display: inline;
+}
+ 
+/* Hero sub italic em */
+.hero-sub em {
+  font-style: italic;
+  font-family: var(--F1);
+  color: var(--red);
+  font-weight: 700;
+}
+ 
+/* Hero badges — styled pill with colour tints */
+.hero-badges span:nth-child(1) {
+  background: rgba(255,61,46,.08);
+  border-color: rgba(255,61,46,.25);
+  color: var(--red);
+}
+.hero-badges span:nth-child(2) {
+  background: rgba(31,122,58,.08);
+  border-color: rgba(31,122,58,.25);
+  color: var(--green);
+}
+.hero-badges span:nth-child(3) {
+  background: rgba(255,182,39,.12);
+  border-color: rgba(255,182,39,.35);
+  color: #8B5E00;
+}
+ 
