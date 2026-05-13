@@ -300,8 +300,8 @@
     <div class="footer-col">
       <h4>Our Company</h4>
       <ul>
-        <li><a href="#">About Us</a></li>
-        <li><a href="#">Contact Us</a></li>
+        <li><a href="pages/about.html">About Us</a></li>
+        <li><a href="pages/contact.html">Contact Us</a></li>
         <li><a href="#products-section">Shop All</a></li>
       </ul>
     </div>
@@ -310,9 +310,8 @@
     <div class="footer-col">
       <h4>Policies</h4>
       <ul>
-        <li><a href="#">Privacy Policy</a></li>
-        <li><a href="#">Terms & Conditions</a></li>
-        <li><a href="#">Return Policy</a></li>
+        <li><a href="pages/privacy.html">Privacy Policy</a></li>
+        <li><a href="pages/terms.html">Terms &amp; Conditions</a></li>
       </ul>
     </div>
  
@@ -331,13 +330,20 @@
       </ul>
     </div>
  
-    <!-- Newsletter -->
+    <!-- Account -->
     <div class="footer-newsletter">
-      <h4>Stay Updated</h4>
-      <p>Get the latest deals and tech news. No spam!</p>
-      <div class="newsletter-form">
-        <input type="email" placeholder="Enter your email"/>
-        <button type="button">Subscribe</button>
+      <h4>My Account</h4>
+      <p>Login or create an account to track your orders and shop faster.</p>
+      <a href="pages/login.html" id="footer-login-btn" class="btn-shop" style="display:inline-flex;margin-bottom:.6rem;font-size:.85rem;padding:.65rem 1.4rem;text-decoration:none">
+        Login to Account
+      </a>
+      <br/>
+      <a href="pages/login.html?tab=register" id="footer-register-btn" style="font-size:.82rem;color:var(--green);font-weight:600;text-decoration:underline">
+        Create Account →
+      </a>
+      <div id="footer-user-info" style="display:none;background:var(--green-l);border:1px solid rgba(46,125,50,.2);border-radius:8px;padding:.75rem 1rem;margin-top:.5rem">
+        <div style="font-weight:700;font-size:.88rem;color:var(--text)" id="footer-user-name"></div>
+        <a href="pages/orders.html" style="font-size:.8rem;color:var(--green);font-weight:600">View My Orders →</a>
       </div>
     </div>
   </div>
@@ -412,6 +418,8 @@ async function init() {
  
   // Update menu orders link
   document.getElementById('menu-orders').style.display = currentUser ? '' : 'none';
+  // Footer account block
+  updateFooterAccount();
  
   await loadCategoryGrid();
   await loadProducts();
@@ -625,6 +633,23 @@ function closeModal(id) { document.getElementById(id).style.display='none'; docu
 function showErr(id, msg) { const el=document.getElementById(id); el.textContent=msg; el.style.display='block' }
 function scrollToProducts() { document.getElementById('products-section').scrollIntoView({behavior:'smooth'}) }
  
+function updateFooterAccount() {
+  const loginBtn = document.getElementById('footer-login-btn');
+  const regBtn   = document.getElementById('footer-register-btn');
+  const userInfo = document.getElementById('footer-user-info');
+  const userName = document.getElementById('footer-user-name');
+  if (currentUser) {
+    if(loginBtn) loginBtn.style.display = 'none';
+    if(regBtn)   regBtn.style.display   = 'none';
+    if(userInfo) userInfo.style.display = 'block';
+    if(userName) userName.textContent   = '👋 ' + currentUser.email.split('@')[0];
+  } else {
+    if(loginBtn) loginBtn.style.display = 'inline-flex';
+    if(regBtn)   regBtn.style.display   = 'inline';
+    if(userInfo) userInfo.style.display = 'none';
+  }
+}
+ 
 document.addEventListener('click', e => {
   if (e.target.id==='checkout-modal') closeModal('checkout-modal');
   if (e.target.id==='login-guard') closeModal('login-guard');
@@ -636,4 +661,3 @@ document.addEventListener('DOMContentLoaded', init);
 </script>
 </body>
 </html>
- 
