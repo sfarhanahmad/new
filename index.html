@@ -512,10 +512,6 @@ function renderProducts(prods) {
           ? `<img src="${p.image_url}" alt="${p.name}" loading="lazy"/>`
           : `<span style="font-size:3.5rem">${p.emoji || '📦'}</span>`}
       </div>
-      <div class="card-rating">
-        <span class="stars">★★★★★</span>
-        <span class="rating-count">(${Math.floor(Math.random()*40+5)})</span>
-      </div>
       <div class="card-body">
         <div class="card-name">${p.name}</div>
         <div class="card-footer">
