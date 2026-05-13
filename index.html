@@ -8,136 +8,344 @@
 </head>
 <body>
  
+<!-- TOP BAR -->
+<div class="topbar">
+  <span>🚚 Free delivery on orders over Rs. 2,000</span>
+  <span>📞 Call Now: <a href="tel:03266570023">03266570023</a></span>
+</div>
+ 
 <!-- NAV -->
 <nav id="navbar">
-  <a class="nav-logo" href="index.html">
-    <svg class="logo-svg" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <!-- Gear -->
-      <path d="M24 8 L26.5 4 L21.5 4 L24 8Z M36 12 L40 10 L37 6 L33.5 9.5Z M40 24 L44 21.5 L44 26.5 L40 24Z M36 36 L37 40 L40 42 L40 37.5Z M24 40 L21.5 44 L26.5 44 L24 40Z M12 36 L8 37.5 L8 42 L11 40Z M8 24 L4 26.5 L4 21.5 L8 24Z M12 12 L10.5 9.5 L7 6 L11 10Z"
-        fill="#FF3D2E" opacity=".9"/>
-      <circle cx="24" cy="24" r="14" fill="none" stroke="#FF3D2E" stroke-width="3.5"/>
-      <circle cx="24" cy="24" r="8"  fill="none" stroke="#FF3D2E" stroke-width="2"/>
-      <!-- Pulse line through center -->
-      <polyline points="12,24 17,24 19,18 21,30 23,20 25,28 27,24 36,24"
-        fill="none" stroke="#1A0A04" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-    <span class="logo-p">PULSE</span><span class="logo-g">GEAR</span>
-  </a>
-  <div class="nav-links">
-    <a href="index.html" class="active">STORE</a>
-    <a href="pages/orders.html" id="nav-orders" style="display:none">MY ORDERS</a>
+  <div class="nav-inner">
+    <!-- Logo -->
+    <a class="nav-logo" href="index.html">
+      <svg class="logo-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="18" cy="18" r="16" stroke="#2e7d32" stroke-width="2.5"/>
+        <circle cx="18" cy="18" r="10" stroke="#2e7d32" stroke-width="2"/>
+        <polyline points="8,18 12,18 14,12 16,24 18,14 20,22 22,18 28,18"
+          fill="none" stroke="#2e7d32" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span id="nav-store-name">PulseGear</span>
+    </a>
+ 
+    <!-- Search -->
+    <div class="nav-search">
+      <input type="text" id="search-input" placeholder="Search products..." oninput="searchProducts(this.value)"/>
+      <button aria-label="Search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" width="18" height="18"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </button>
+    </div>
+ 
+    <!-- Actions -->
+    <div class="nav-actions">
+      <a href="pages/orders.html" id="nav-orders" class="nav-action" style="display:none" aria-label="My Orders">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>
+        <span>Orders</span>
+      </a>
+      <span id="nav-username" class="nav-user-info"></span>
+      <a href="pages/login.html" id="nav-login" class="nav-action" aria-label="Login">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>Login</span>
+      </a>
+      <button id="nav-logout" class="nav-action" style="display:none" onclick="logout()" aria-label="Logout">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        <span>Logout</span>
+      </button>
+    </div>
   </div>
-  <div class="nav-auth">
-    <span id="nav-username" class="nav-user"></span>
-    <a href="pages/login.html" id="nav-login" class="btn">LOGIN</a>
-    <button id="nav-logout" class="btn btn-p" style="display:none" onclick="logout()">LOGOUT</button>
+ 
+  <!-- Green Menu Bar -->
+  <div class="menu-bar">
+    <div class="menu-bar-inner">
+      <div class="menu-toggle">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        Menu
+      </div>
+      <div class="menu-links">
+        <a href="index.html">Home</a>
+        <a href="#products-section">Shop All</a>
+        <a href="#categories-section">Categories</a>
+        <a href="pages/orders.html" id="menu-orders" style="display:none">My Orders</a>
+      </div>
+      <div class="call-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <span id="menu-phone">03266570023</span>
+      </div>
+    </div>
   </div>
 </nav>
  
-<!-- HERO -->
-<section class="hero">
-  <!-- Floating tech icons — warm ColorSizzle palette -->
-  <div class="pg-float" aria-hidden="true">
-    <svg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
-      <polygon points="46,8 24,44 38,44 34,72 56,36 42,36" fill="rgba(255,61,46,.14)" stroke="#FF3D2E" stroke-width="3" stroke-linejoin="round"/>
-    </svg>
-  </div>
-  <div class="pg-float" aria-hidden="true">
-    <svg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
-      <path d="M10 38 Q40 12 70 38" fill="none" stroke="#FFB627" stroke-width="3.5" stroke-linecap="round"/>
-      <path d="M20 50 Q40 30 60 50" fill="none" stroke="#FFB627" stroke-width="3.5" stroke-linecap="round"/>
-      <path d="M30 62 Q40 52 50 62" fill="none" stroke="#FFB627" stroke-width="3.5" stroke-linecap="round"/>
-      <circle cx="40" cy="70" r="4" fill="#FFB627"/>
-    </svg>
-  </div>
-  <div class="pg-float" aria-hidden="true">
-    <svg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
-      <rect x="22" y="22" width="36" height="36" rx="4" fill="rgba(91,26,58,.1)" stroke="#5B1A3A" stroke-width="3"/>
-      <rect x="30" y="30" width="20" height="20" rx="2" fill="none" stroke="#5B1A3A" stroke-width="2"/>
-      <line x1="28" y1="10" x2="28" y2="22" stroke="#5B1A3A" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="40" y1="10" x2="40" y2="22" stroke="#5B1A3A" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="52" y1="10" x2="52" y2="22" stroke="#5B1A3A" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="28" y1="58" x2="28" y2="70" stroke="#5B1A3A" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="40" y1="58" x2="40" y2="70" stroke="#5B1A3A" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="52" y1="58" x2="52" y2="70" stroke="#5B1A3A" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="10" y1="30" x2="22" y2="30" stroke="#5B1A3A" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="10" y1="40" x2="22" y2="40" stroke="#5B1A3A" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="10" y1="50" x2="22" y2="50" stroke="#5B1A3A" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="58" y1="30" x2="70" y2="30" stroke="#5B1A3A" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="58" y1="40" x2="70" y2="40" stroke="#5B1A3A" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="58" y1="50" x2="70" y2="50" stroke="#5B1A3A" stroke-width="2.5" stroke-linecap="round"/>
-    </svg>
-  </div>
-  <div class="pg-float" aria-hidden="true">
-    <svg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="40" cy="40" r="28" fill="rgba(255,107,46,.1)" stroke="#FF6B2E" stroke-width="2.5"/>
-      <circle cx="40" cy="40" r="16" fill="none" stroke="#FF6B2E" stroke-width="2.5"/>
-      <circle cx="40" cy="40" r="4" fill="#FF6B2E"/>
-      <line x1="40" y1="8"  x2="40" y2="18" stroke="#FF6B2E" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="40" y1="62" x2="40" y2="72" stroke="#FF6B2E" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="8"  y1="40" x2="18" y2="40" stroke="#FF6B2E" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="62" y1="40" x2="72" y2="40" stroke="#FF6B2E" stroke-width="2.5" stroke-linecap="round"/>
-    </svg>
-  </div>
-  <div class="pg-float" aria-hidden="true">
-    <svg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
-      <polygon points="40,8 68,24 68,56 40,72 12,56 12,24" fill="rgba(31,122,58,.1)" stroke="#1F7A3A" stroke-width="2.5" stroke-linejoin="round"/>
-      <polygon points="40,20 58,30 58,50 40,60 22,50 22,30" fill="none" stroke="#1F7A3A" stroke-width="1.5" stroke-linejoin="round"/>
-      <circle cx="40" cy="40" r="5" fill="#1F7A3A" opacity=".7"/>
-    </svg>
-  </div>
-  <div class="pg-float" aria-hidden="true">
-    <svg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
-      <polygon points="14,10 14,58 28,44 36,64 46,60 38,40 56,40" fill="rgba(255,61,46,.1)" stroke="#FF3D2E" stroke-width="3" stroke-linejoin="round"/>
-    </svg>
-  </div>
- 
-  <div class="hero-content pg-hero-enter">
-    <!-- Main title -->
-    <h1 id="store-heading"><span class="h-pulse">PULSE</span><span class="h-gear">GEAR</span></h1>
- 
-    <!-- Tagline -->
-    <p class="hero-sub" id="hero-tagline"><em>Next-gen tech.</em> Delivered to your door.</p>
- 
-    <!-- Trust badges -->
-    <div class="hero-badges">
-      <span>⚡ Fast Delivery</span>
-      <span>🔒 Secure Checkout</span>
-      <span>📦 COD Available</span>
+<!-- HERO SLIDER -->
+<div class="hero-slider" id="hero-slider">
+  <div class="slider-track" id="slider-track">
+    <!-- Slide 1 -->
+    <div class="slide" style="background:linear-gradient(135deg,#e8f5e9 0%,#f1f8e9 100%)">
+      <div class="slide-content">
+        <span class="slide-tag">New Arrival</span>
+        <h2>Next-Gen <span>Tech</span><br/>Delivered Fast</h2>
+        <p>Premium gadgets at unbeatable prices — right to your door.</p>
+        <button class="btn-shop" onclick="scrollToProducts()">
+          Shop Now
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+      <!-- Animated SVG product illustration -->
+      <svg class="slide-img" viewBox="0 0 320 280" xmlns="http://www.w3.org/2000/svg">
+        <!-- Laptop body -->
+        <rect x="60" y="80" width="200" height="130" rx="10" fill="#37474f" />
+        <rect x="70" y="90" width="180" height="110" rx="6" fill="#263238" />
+        <!-- Screen content -->
+        <rect x="80" y="100" width="160" height="90" rx="4" fill="#1a237e" opacity=".8"/>
+        <!-- Pulse line on screen -->
+        <polyline points="90,145 105,145 112,125 120,165 128,135 136,155 144,145 170,145"
+          fill="none" stroke="#69f0ae" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="170" cy="145" r="4" fill="#69f0ae">
+          <animate attributeName="r" values="4;8;4" dur="1.5s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="1;0;1" dur="1.5s" repeatCount="indefinite"/>
+        </circle>
+        <!-- Keyboard -->
+        <rect x="50" y="212" width="220" height="14" rx="7" fill="#546e7a"/>
+        <rect x="100" y="216" width="120" height="6" rx="3" fill="#37474f"/>
+        <!-- Glow -->
+        <ellipse cx="160" cy="225" rx="80" ry="8" fill="#2e7d32" opacity=".15"/>
+        <!-- Floating badges -->
+        <rect x="230" y="95" width="70" height="32" rx="6" fill="#fff" opacity=".9"/>
+        <text x="244" y="116" font-size="11" font-family="Poppins,sans-serif" fill="#2e7d32" font-weight="700">COD ✓</text>
+        <rect x="20" y="140" width="72" height="32" rx="6" fill="#fff" opacity=".9"/>
+        <text x="28" y="161" font-size="10" font-family="Poppins,sans-serif" fill="#1565c0" font-weight="700">Fast 🚚</text>
+      </svg>
     </div>
- 
-    <!-- CTA -->
-    <button class="btn-browse" onclick="scrollToProducts()">Shop Now →</button>
- 
+    <!-- Slide 2 -->
+    <div class="slide" style="background:linear-gradient(135deg,#e3f2fd 0%,#e8eaf6 100%)">
+      <div class="slide-content">
+        <span class="slide-tag" style="background:#1565c0">Best Seller</span>
+        <h2>Premium <span style="color:#1565c0">Earbuds</span><br/>Crystal Clear</h2>
+        <p>Immersive sound quality with active noise cancellation.</p>
+        <button class="btn-shop" style="background:#1565c0;box-shadow:0 4px 14px rgba(21,101,192,.35)" onclick="scrollToProducts()">
+          Shop Now
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+      <svg class="slide-img" viewBox="0 0 320 280" xmlns="http://www.w3.org/2000/svg">
+        <!-- Earbuds case -->
+        <rect x="85" y="60" width="150" height="160" rx="40" fill="#212121"/>
+        <rect x="95" y="70" width="130" height="140" rx="35" fill="#37474f"/>
+        <!-- Left earbud -->
+        <ellipse cx="128" cy="150" rx="22" ry="28" fill="#212121"/>
+        <ellipse cx="128" cy="150" rx="16" ry="20" fill="#455a64"/>
+        <circle cx="128" cy="150" r="7" fill="#fff" opacity=".15"/>
+        <!-- Right earbud -->
+        <ellipse cx="192" cy="150" rx="22" ry="28" fill="#212121"/>
+        <ellipse cx="192" cy="150" rx="16" ry="20" fill="#455a64"/>
+        <circle cx="192" cy="150" r="7" fill="#fff" opacity=".15"/>
+        <!-- Hinge -->
+        <rect x="147" y="136" width="26" height="28" rx="4" fill="#263238"/>
+        <!-- Sound waves animated -->
+        <g opacity=".7">
+          <path d="M240 130 Q255 150 240 170" fill="none" stroke="#1565c0" stroke-width="3" stroke-linecap="round">
+            <animate attributeName="opacity" values="0.7;0.2;0.7" dur="1.8s" repeatCount="indefinite"/>
+          </path>
+          <path d="M252 120 Q272 150 252 180" fill="none" stroke="#1565c0" stroke-width="2.5" stroke-linecap="round">
+            <animate attributeName="opacity" values="0.5;0.1;0.5" dur="1.8s" begin="0.3s" repeatCount="indefinite"/>
+          </path>
+          <path d="M68 130 Q53 150 68 170" fill="none" stroke="#1565c0" stroke-width="3" stroke-linecap="round">
+            <animate attributeName="opacity" values="0.7;0.2;0.7" dur="1.8s" repeatCount="indefinite"/>
+          </path>
+        </g>
+        <!-- Glow -->
+        <ellipse cx="160" cy="230" rx="70" ry="8" fill="#1565c0" opacity=".1"/>
+      </svg>
+    </div>
+    <!-- Slide 3 -->
+    <div class="slide" style="background:linear-gradient(135deg,#fff8e1 0%,#fce4ec 100%)">
+      <div class="slide-content">
+        <span class="slide-tag" style="background:#e53935">Hot Deal</span>
+        <h2>Smart <span style="color:#e53935">Watches</span><br/>Stay Connected</h2>
+        <p>Track your health and stay on top of notifications all day.</p>
+        <button class="btn-shop" style="background:#e53935;box-shadow:0 4px 14px rgba(229,57,53,.35)" onclick="scrollToProducts()">
+          Shop Now
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+      <svg class="slide-img" viewBox="0 0 320 280" xmlns="http://www.w3.org/2000/svg">
+        <!-- Watch band top -->
+        <rect x="132" y="30" width="56" height="55" rx="10" fill="#1a237e"/>
+        <!-- Watch body -->
+        <rect x="100" y="82" width="120" height="116" rx="24" fill="#212121"/>
+        <rect x="108" y="90" width="104" height="100" rx="20" fill="#1a237e"/>
+        <!-- Screen face -->
+        <rect x="115" y="97" width="90" height="86" rx="16" fill="#0d0d2b"/>
+        <!-- Time display -->
+        <text x="160" y="138" font-size="22" font-family="Poppins,sans-serif" fill="white" font-weight="700" text-anchor="middle">10:24</text>
+        <!-- Pulse line -->
+        <polyline points="122,155 132,155 136,143 142,167 148,148 154,158 160,155 178,155"
+          fill="none" stroke="#f44336" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- Heartbeat dot -->
+        <circle cx="178" cy="155" r="3" fill="#f44336">
+          <animate attributeName="r" values="3;6;3" dur="1s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="1;0;1" dur="1s" repeatCount="indefinite"/>
+        </circle>
+        <!-- Crown button -->
+        <rect x="220" y="122" width="10" height="34" rx="5" fill="#37474f"/>
+        <!-- Band bottom -->
+        <rect x="132" y="198" width="56" height="52" rx="10" fill="#1a237e"/>
+        <!-- Buckle -->
+        <rect x="148" y="236" width="24" height="10" rx="3" fill="#37474f"/>
+        <!-- Glow -->
+        <ellipse cx="160" cy="258" rx="60" ry="7" fill="#e53935" opacity=".12"/>
+      </svg>
+    </div>
   </div>
  
-  <div id="particles" style="position:absolute;inset:0;pointer-events:none;z-index:1"></div>
-</section>
- 
-<!-- MARQUEE -->
-<div class="marquee-bar" aria-hidden="true">
-  <div class="marquee-track">
-    <span>Fast Delivery <span class="marquee-star">✦</span> Secure Checkout <span class="marquee-star">✦</span> COD Available <span class="marquee-star">✦</span> Next-Gen Tech <span class="marquee-star">✦</span> Top Brands <span class="marquee-star">✦</span> Best Prices <span class="marquee-star">✦</span> 100% Genuine <span class="marquee-star">✦</span> Pakistan Wide Delivery <span class="marquee-star">✦</span></span>
-    <span>Fast Delivery <span class="marquee-star">✦</span> Secure Checkout <span class="marquee-star">✦</span> COD Available <span class="marquee-star">✦</span> Next-Gen Tech <span class="marquee-star">✦</span> Top Brands <span class="marquee-star">✦</span> Best Prices <span class="marquee-star">✦</span> 100% Genuine <span class="marquee-star">✦</span> Pakistan Wide Delivery <span class="marquee-star">✦</span></span>
+  <!-- Slider controls -->
+  <button class="slider-btn slider-prev" onclick="moveSlide(-1)" aria-label="Previous">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+  </button>
+  <button class="slider-btn slider-next" onclick="moveSlide(1)" aria-label="Next">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+  </button>
+  <div class="slider-dots" id="slider-dots">
+    <div class="slider-dot active" onclick="goSlide(0)"></div>
+    <div class="slider-dot" onclick="goSlide(1)"></div>
+    <div class="slider-dot" onclick="goSlide(2)"></div>
   </div>
 </div>
  
-<!-- CATEGORY BADGES -->
-<section class="cat-badges-section" id="cat-badges-section">
-  <p class="cat-section-title">— Shop by Category —</p>
-  <div id="cat-badges-row"></div>
-</section>
+<!-- CATEGORIES -->
+<div class="section" id="categories-section">
+  <div class="section-title">
+    Categories
+    <a href="#products-section">View All →</a>
+  </div>
+  <div class="cat-grid" id="cat-grid">
+    <!-- loaded by JS -->
+  </div>
+</div>
  
 <!-- PRODUCTS -->
-<section class="products-section" id="products-section">
-  <div class="section-head pg-reveal">
-    <div class="section-tag">— Our Collection —</div>
-    <h2>Handpicked Tech Deals.</h2>
-    <p>Quality gadgets at prices that make sense. No compromises.</p>
+<div class="products-wrap" id="products-section">
+  <div class="section-title">
+    All Products
+    <span id="products-count" style="font-size:.8rem;font-weight:500;color:var(--mute)"></span>
   </div>
   <div id="filter-bar"></div>
   <div id="products-grid"></div>
-</section>
+</div>
+ 
+<!-- TRUST BADGES -->
+<div class="trust-section">
+  <div class="trust-grid">
+    <div class="trust-card">
+      <div class="trust-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M5 17H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v3"/><rect x="9" y="11" width="14" height="10" rx="1"/><path d="M1 13h14"/></svg>
+      </div>
+      <div class="trust-text">
+        <h4>Free Shipping</h4>
+        <p>On all orders over Rs. 2,000</p>
+      </div>
+    </div>
+    <div class="trust-card">
+      <div class="trust-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+      </div>
+      <div class="trust-text">
+        <h4>Secure Payment</h4>
+        <p>JazzCash, EasyPaisa & COD</p>
+      </div>
+    </div>
+    <div class="trust-card">
+      <div class="trust-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <div class="trust-text">
+        <h4>24/7 Support</h4>
+        <p>Always here to help you</p>
+      </div>
+    </div>
+    <div class="trust-card">
+      <div class="trust-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      </div>
+      <div class="trust-text">
+        <h4>Daily Offers</h4>
+        <p>New deals added every day</p>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <!-- Brand -->
+    <div class="footer-brand">
+      <a class="nav-logo" href="index.html" style="font-size:1.3rem;margin-bottom:.5rem;display:inline-flex">
+        <span id="footer-store-name">PulseGear</span>
+      </a>
+      <p id="footer-desc">Delivering original tech products across Pakistan with trust and care. Fast delivery guaranteed.</p>
+      <div class="footer-socials">
+        <a href="#" aria-label="Facebook">
+          <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        </a>
+        <a href="#" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a href="#" aria-label="TikTok">
+          <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+        </a>
+      </div>
+    </div>
+ 
+    <!-- Our Company -->
+    <div class="footer-col">
+      <h4>Our Company</h4>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Contact Us</a></li>
+        <li><a href="#products-section">Shop All</a></li>
+      </ul>
+    </div>
+ 
+    <!-- Policies -->
+    <div class="footer-col">
+      <h4>Policies</h4>
+      <ul>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms & Conditions</a></li>
+        <li><a href="#">Return Policy</a></li>
+      </ul>
+    </div>
+ 
+    <!-- Contact -->
+    <div class="footer-col">
+      <h4>Contact Us</h4>
+      <ul class="footer-contact">
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span id="footer-phone">03266570023</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span>Pakistan Wide Delivery</span>
+        </li>
+      </ul>
+    </div>
+ 
+    <!-- Newsletter -->
+    <div class="footer-newsletter">
+      <h4>Stay Updated</h4>
+      <p>Get the latest deals and tech news. No spam!</p>
+      <div class="newsletter-form">
+        <input type="email" placeholder="Enter your email"/>
+        <button type="button">Subscribe</button>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span id="footer-copy">© 2026 PulseGear Pakistan · All rights reserved</span>
+    <span>Made with ❤️ in Pakistan</span>
+  </div>
+</footer>
  
 <!-- CHECKOUT MODAL -->
 <div id="checkout-modal" class="modal-overlay" style="display:none">
@@ -148,14 +356,14 @@
     <form onsubmit="placeOrder(event)">
       <div class="fg"><label>Full Name</label><input id="o-name" required placeholder="Muhammad Ali"/></div>
       <div class="fg"><label>Phone Number</label><input id="o-phone" required placeholder="03XX-XXXXXXX"/></div>
-      <div class="fg"><label>Delivery Address</label><textarea id="o-address" required placeholder="House #, Street, City, Province"></textarea></div>
+      <div class="fg"><label>Delivery Address</label><textarea id="o-address" required placeholder="House #, Street, City"></textarea></div>
       <div class="fg">
         <label>Payment Method</label>
         <div class="pay-opts" id="pay-opts"></div>
         <div class="pay-info" id="pay-info"></div>
       </div>
       <div class="err-msg" id="co-err"></div>
-      <button type="submit" class="btn btn-full btn-p" id="co-btn">Place Order →</button>
+      <button type="submit" class="btn-full" id="co-btn">Place Order →</button>
     </form>
   </div>
 </div>
@@ -164,8 +372,8 @@
 <div id="success-modal" class="modal-overlay" style="display:none">
   <div class="modal-box text-center">
     <div class="success-icon">✓</div>
-    <h2 class="modal-title">Order Placed!</h2>
-    <p style="color:var(--mute);margin:10px 0;font-size:.9rem">We'll contact you on your number shortly to confirm.</p>
+    <h2 class="modal-title" style="text-align:center">Order Placed!</h2>
+    <p style="color:var(--mute);margin:10px 0;font-size:.9rem">We'll contact you on your number shortly.</p>
     <p class="order-id-txt" id="suc-orderid"></p>
     <button class="btn" onclick="closeModal('success-modal')">Continue Shopping</button>
   </div>
@@ -174,103 +382,176 @@
 <!-- LOGIN GUARD -->
 <div id="login-guard" class="modal-overlay" style="display:none">
   <div class="modal-box text-center">
-    <h2 class="modal-title">Login Required</h2>
-    <p style="color:var(--mute);margin:14px 0">Please login or register to place an order.</p>
-    <a href="pages/login.html" class="btn btn-p">Login / Register</a><br><br>
+    <h2 class="modal-title" style="text-align:center">Login Required</h2>
+    <p style="color:var(--mute);margin:14px 0">Please login to place an order.</p>
+    <a href="pages/login.html" class="btn-full" style="display:inline-block;max-width:220px;text-align:center">Login / Register</a><br><br>
     <button class="btn-ghost" onclick="closeModal('login-guard')">Cancel</button>
   </div>
 </div>
- 
-<footer>
-  <p id="footer-name">© 2026 PulseGear Pakistan · All rights reserved</p>
-</footer>
  
 <script src="js/config.js"></script>
 <script src="js/auth.js"></script>
 <script>
 let selProduct = null;
+let allProducts = [];
  
+/* ============ INIT ============ */
 async function init() {
   await loadSettings();
  
-  // Store name
   const name = SETTINGS.store_name || 'PulseGear';
   document.title = name;
-  const h = document.getElementById('store-heading');
-  h.textContent = name.toUpperCase();
-  document.getElementById('hero-tagline').textContent = SETTINGS.hero_tagline || 'Next-gen tech. Delivered to your door.';
-  document.getElementById('footer-name').textContent = `© ${new Date().getFullYear()} ${name} Pakistan · All rights reserved`;
+  document.getElementById('nav-store-name').textContent = name;
+  document.getElementById('footer-store-name').textContent = name;
+  document.getElementById('footer-copy').textContent = `© ${new Date().getFullYear()} ${name} Pakistan · All rights reserved`;
+  document.getElementById('footer-desc').textContent = `Delivering original tech products across Pakistan with trust and care. Fast delivery guaranteed.`;
+  if (SETTINGS.whatsapp) {
+    document.getElementById('menu-phone').textContent = SETTINGS.whatsapp;
+    document.getElementById('footer-phone').textContent = SETTINGS.whatsapp;
+  }
  
-  // Nav logo
-  const half = Math.ceil(name.length / 2);
-  document.querySelector('.nav-logo').innerHTML =
-    `<span class="logo-dot"></span><span class="logo-p">${name.slice(0,half).toUpperCase()}</span><span class="logo-g">${name.slice(half).toUpperCase()}</span>`;
+  // Update menu orders link
+  document.getElementById('menu-orders').style.display = currentUser ? '' : 'none';
  
-  await loadCategoryBadges();
+  await loadCategoryGrid();
   await loadProducts();
-  spawnParticles();
+  startSlider();
 }
  
+/* ============ SLIDER ============ */
+let slideIndex = 0;
+let slideTimer;
+const totalSlides = 3;
+ 
+function goSlide(n) {
+  slideIndex = n;
+  document.getElementById('slider-track').style.transform = `translateX(-${n * 100}%)`;
+  document.querySelectorAll('.slider-dot').forEach((d, i) => d.classList.toggle('active', i === n));
+}
+function moveSlide(dir) {
+  slideIndex = (slideIndex + dir + totalSlides) % totalSlides;
+  goSlide(slideIndex);
+  resetSliderTimer();
+}
+function startSlider() {
+  slideTimer = setInterval(() => moveSlide(1), 5000);
+}
+function resetSliderTimer() {
+  clearInterval(slideTimer);
+  startSlider();
+}
+ 
+/* ============ CATEGORY GRID ============ */
+async function loadCategoryGrid() {
+  const { data: cats } = await sb().from('categories').select('*').eq('active', true).order('sort_order', { ascending: true });
+  const grid = document.getElementById('cat-grid');
+  if (!cats || !cats.length) {
+    document.getElementById('categories-section').style.display = 'none';
+    return;
+  }
+  // Add "All" card
+  const allCats = [{ slug: 'all', name: 'All Products', emoji: '🛍️', image_url: null }, ...cats];
+  grid.innerHTML = allCats.map(c => `
+    <div class="cat-card" onclick="filterByCat('${c.slug}', this)" data-slug="${c.slug}">
+      <div class="cat-card-img">
+        ${c.image_url
+          ? `<img src="${c.image_url}" alt="${c.name}" loading="lazy"/>`
+          : `<span style="font-size:2rem">${c.emoji || '📦'}</span>`}
+      </div>
+      <div class="cat-card-name">${c.name}</div>
+    </div>`).join('');
+}
+ 
+/* ============ PRODUCTS ============ */
 async function loadProducts(filterCat) {
   let q = sb().from('products').select('*').eq('active', true).order('created_at', { ascending: false });
-  if (filterCat && filterCat !== 'all') q = q.eq('category', filterCat);
   const { data: prods } = await q;
  
-  const grid = document.getElementById('products-grid');
-  const fbar = document.getElementById('filter-bar');
+  allProducts = prods || [];
  
-  // Collect all cats for filter bar (always load all for that)
-  const { data: allProds } = await sb().from('products').select('category').eq('active', true);
+  // Build filter bar from all products
   const cats = new Set(['all']);
-  (allProds || []).forEach(p => { if (p.category) cats.add(p.category.toLowerCase()) });
+  allProducts.forEach(p => { if (p.category) cats.add(p.category.toLowerCase()) });
  
+  const fbar = document.getElementById('filter-bar');
   fbar.innerHTML = [...cats].map(c =>
-    `<button class="filter-btn${(!filterCat && c==='all') || filterCat===c ? ' active' : ''}" onclick="filterProducts('${c}',this)">${c === 'all' ? 'All Products' : c.charAt(0).toUpperCase()+c.slice(1)}</button>`
+    `<button class="filter-btn${(!filterCat && c==='all') || filterCat===c ? ' active' : ''}" onclick="filterCat('${c}',this)">${c === 'all' ? 'All' : c.charAt(0).toUpperCase()+c.slice(1)}</button>`
   ).join('');
  
-  if (!prods || !prods.length) {
-    grid.innerHTML = `
-      <div class="empty-state">
-        <div class="empty-state-icon">📦</div>
-        <h3>Nothing here yet</h3>
-        <p>New products are being added. Check back soon!</p>
-      </div>`;
+  renderProducts(filterCat ? allProducts.filter(p => (p.category||'').toLowerCase() === filterCat) : allProducts);
+}
+ 
+function renderProducts(prods) {
+  const grid = document.getElementById('products-grid');
+  document.getElementById('products-count').textContent = `(${prods.length} products)`;
+ 
+  if (!prods.length) {
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--mute)">
+      <div style="font-size:3rem;margin-bottom:1rem">📦</div>
+      <div style="font-size:1rem;font-weight:600">No products found</div>
+    </div>`;
     return;
   }
  
-  grid.innerHTML = prods.map((p, i) => `
-    <div class="product-card" data-cat="${(p.category||'').toLowerCase()}" style="animation-delay:${i*0.07}s">
+  grid.innerHTML = prods.map((p, i) => {
+    const hasDiscount = p.original_price && p.original_price > p.price;
+    const discPct = hasDiscount ? Math.round((1 - p.price/p.original_price)*100) : 0;
+    return `
+    <div class="product-card" data-cat="${(p.category||'').toLowerCase()}" style="animation-delay:${i*0.06}s">
+      ${hasDiscount ? `<div class="discount-badge">-${discPct}%</div>` : ''}
       <div class="card-img">
         ${p.image_url
           ? `<img src="${p.image_url}" alt="${p.name}" loading="lazy"/>`
           : `<span style="font-size:3.5rem">${p.emoji || '📦'}</span>`}
       </div>
+      <div class="card-rating">
+        <span class="stars">★★★★★</span>
+        <span class="rating-count">(${Math.floor(Math.random()*40+5)})</span>
+      </div>
       <div class="card-body">
-        <div class="card-cat">${p.category || 'General'}</div>
         <div class="card-name">${p.name}</div>
-        ${p.description ? `<div class="card-desc">${p.description}</div>` : ''}
         <div class="card-footer">
-          <div class="card-price">
-            Rs. ${Number(p.price).toLocaleString()}
-            <small>Free delivery</small>
+          <div class="card-price-wrap">
+            <div class="card-price">Rs. ${Number(p.price).toLocaleString()}</div>
+            ${hasDiscount ? `<div class="card-price-old">Rs. ${Number(p.original_price).toLocaleString()}</div>` : ''}
           </div>
-          ${p.in_stock !== false
+          ${p.stock > 0 || p.in_stock !== false
             ? `<button class="btn-buy" onclick='openCheckout(${JSON.stringify(p)})'>Buy Now</button>`
             : `<span class="out-badge">Out of Stock</span>`}
         </div>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
  
-function filterProducts(cat, btn) {
+function filterCat(cat, btn) {
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   if (btn) btn.classList.add('active');
-  const cards = document.querySelectorAll('.product-card');
-  cards.forEach(c => {
-    c.style.display = (cat === 'all' || c.dataset.cat === cat) ? '' : 'none';
-  });
+  const filtered = cat === 'all' ? allProducts : allProducts.filter(p => (p.category||'').toLowerCase() === cat);
+  renderProducts(filtered);
+  // sync cat grid
+  document.querySelectorAll('.cat-card').forEach(c => c.classList.toggle('active', c.dataset.slug === cat));
 }
  
+function filterByCat(slug, el) {
+  document.querySelectorAll('.cat-card').forEach(c => c.classList.remove('active'));
+  if (el) el.classList.add('active');
+  document.getElementById('products-section').scrollIntoView({ behavior: 'smooth' });
+  const cat = slug === 'all' ? 'all' : slug;
+  filterCat(cat, null);
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.textContent.toLowerCase() === (cat === 'all' ? 'all' : cat)));
+}
+ 
+function searchProducts(q) {
+  if (!q.trim()) { renderProducts(allProducts); return; }
+  const filtered = allProducts.filter(p =>
+    p.name.toLowerCase().includes(q.toLowerCase()) ||
+    (p.category||'').toLowerCase().includes(q.toLowerCase())
+  );
+  renderProducts(filtered);
+}
+ 
+/* ============ CHECKOUT ============ */
 function openCheckout(p) {
   if (!currentUser) {
     document.getElementById('login-guard').style.display = 'flex';
@@ -278,12 +559,26 @@ function openCheckout(p) {
     return;
   }
   selProduct = p;
-  document.getElementById('checkout-summary').innerHTML =
-    `<strong>${p.name}</strong><br><span style="color:var(--red);font-family:var(--F1);font-size:1.1rem;font-weight:900">Rs. ${Number(p.price).toLocaleString()}</span>`;
+  const deliveryFee = p.price < 2000 ? 150 : 0;
+  const total = p.price + deliveryFee;
+  document.getElementById('checkout-summary').innerHTML = `
+    <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+      <span style="font-weight:600">${p.name}</span>
+      <strong style="color:var(--red)">Rs. ${Number(p.price).toLocaleString()}</strong>
+    </div>
+    ${deliveryFee > 0 ? `
+    <div style="font-size:.82rem;color:var(--mute);padding-top:6px;border-top:1px solid var(--border);margin-top:6px">
+      Delivery: Rs. ${deliveryFee} &nbsp;|&nbsp; <strong>Total: Rs. ${total.toLocaleString()}</strong>
+    </div>` : `
+    <div style="font-size:.82rem;color:var(--green);padding-top:6px;border-top:1px solid var(--border);margin-top:6px">✓ Free delivery on this order!</div>`}`;
  
-  const payMethods = SETTINGS.payment_methods || ['COD'];
-  document.getElementById('pay-opts').innerHTML = payMethods.map(m =>
-    `<label class="pay-opt"><input type="radio" name="pay" value="${m}" onchange="showPayInfo('${m}')"/> ${m}</label>`
+  const opts = [];
+  if (SETTINGS.jazzcash)    opts.push({val:'JazzCash',  label:'💸 JazzCash'});
+  if (SETTINGS.easypaisa)   opts.push({val:'EasyPaisa', label:'🟢 EasyPaisa'});
+  if (SETTINGS.cod_enabled) opts.push({val:'COD',       label:'💵 Cash on Delivery'});
+ 
+  document.getElementById('pay-opts').innerHTML = opts.map(o =>
+    `<label class="pay-opt"><input type="radio" name="pay" value="${o.val}" onchange="showPayInfo('${o.val}')"/> ${o.label}</label>`
   ).join('');
   document.getElementById('pay-info').style.display = 'none';
   document.getElementById('co-err').style.display = 'none';
@@ -296,9 +591,9 @@ function openCheckout(p) {
 function showPayInfo(method) {
   const box = document.getElementById('pay-info');
   const info = {
-    'EasyPaisa': `Send to: ${SETTINGS.easypaisa_number || 'N/A'} — share screenshot on WhatsApp after payment.`,
-    'JazzCash':  `Send to: ${SETTINGS.jazzcash_number  || 'N/A'} — share screenshot on WhatsApp after payment.`,
-    'COD': `Pay cash on delivery. Our team will call you to confirm.`
+    JazzCash:  `Send to JazzCash: ${SETTINGS.jazzcash} (${SETTINGS.jazzcash_name || ''}) — then WhatsApp screenshot to ${SETTINGS.whatsapp}`,
+    EasyPaisa: `Send to EasyPaisa: ${SETTINGS.easypaisa} (${SETTINGS.easypaisa_name || ''}) — then WhatsApp screenshot to ${SETTINGS.whatsapp}`,
+    COD: 'Pay cash when your order arrives. Our team will call to confirm.'
   };
   box.textContent = info[method] || '';
   box.style.display = 'block';
@@ -312,129 +607,33 @@ async function placeOrder(e) {
   btn.textContent = 'Processing...'; btn.disabled = true;
   const orderId = 'PG-' + Date.now().toString(36).toUpperCase();
   const { error } = await sb().from('orders').insert([{
-    order_id: orderId,
-    user_id: currentUser.id,
-    user_email: currentUser.email,
+    order_id: orderId, user_id: currentUser.id, user_email: currentUser.email,
     customer_name: document.getElementById('o-name').value.trim(),
     phone: document.getElementById('o-phone').value.trim(),
     address: document.getElementById('o-address').value.trim(),
     payment_method: pay,
-    product_id: selProduct.id,
-    product_name: selProduct.name,
-    product_price: selProduct.price,
-    status: 'pending',
-    created_at: new Date().toISOString()
+    product_id: selProduct.id, product_name: selProduct.name, product_price: selProduct.price,
+    status: 'pending', created_at: new Date().toISOString()
   }]);
-  if (error) {
-    showErr('co-err', error.message);
-    btn.textContent = 'Place Order →'; btn.disabled = false;
-    return;
-  }
+  if (error) { showErr('co-err', error.message); btn.textContent='Place Order →'; btn.disabled=false; return; }
   closeModal('checkout-modal');
   document.getElementById('suc-orderid').textContent = 'Order ID: ' + orderId;
   document.getElementById('success-modal').style.display = 'flex';
 }
  
-function closeModal(id) {
-  document.getElementById(id).style.display = 'none';
-  document.body.style.overflow = '';
-}
-function showErr(id, msg) {
-  const el = document.getElementById(id);
-  el.textContent = msg; el.style.display = 'block';
-}
- 
-function spawnParticles() {
-  const c = document.getElementById('particles');
-  const colors = ['#FF3D2E','#FFB627','#FF6B2E','#1F7A3A','#5B1A3A'];
-  for (let i = 0; i < 16; i++) {
-    const p = document.createElement('div'); p.className = 'particle';
-    p.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;background:${colors[i%colors.length]};animation-duration:${5+Math.random()*8}s;animation-delay:${Math.random()*5}s;opacity:${(Math.random()*.15+.06).toFixed(2)}`;
-    c.appendChild(p);
-  }
-}
+function closeModal(id) { document.getElementById(id).style.display='none'; document.body.style.overflow='' }
+function showErr(id, msg) { const el=document.getElementById(id); el.textContent=msg; el.style.display='block' }
+function scrollToProducts() { document.getElementById('products-section').scrollIntoView({behavior:'smooth'}) }
  
 document.addEventListener('click', e => {
-  if (e.target.id === 'checkout-modal') closeModal('checkout-modal');
-  if (e.target.id === 'login-guard')    closeModal('login-guard');
+  if (e.target.id==='checkout-modal') closeModal('checkout-modal');
+  if (e.target.id==='login-guard') closeModal('login-guard');
 });
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') ['checkout-modal','success-modal','login-guard'].forEach(closeModal);
+  if (e.key==='Escape') ['checkout-modal','success-modal','login-guard'].forEach(closeModal);
 });
- 
-function scrollToProducts() {
-  document.getElementById('products-section').scrollIntoView({ behavior: 'smooth' });
-}
- 
-async function loadCategoryBadges() {
-  const { data: cats } = await sb().from('categories').select('*').eq('active', true).order('sort_order', { ascending: true });
-  const row = document.getElementById('cat-badges-row');
-  if (!cats || !cats.length) {
-    document.querySelector('.cat-badges-section').style.display = 'none';
-    return;
-  }
-  row.innerHTML = cats.map(c => `
-    <div class="cat-badge" onclick="filterByCat('${c.slug}', this)" data-slug="${c.slug}">
-      <div class="cat-badge-circle">
-        ${c.image_url
-          ? `<img src="${c.image_url}" alt="${c.name}" class="cat-badge-img"/>`
-          : `<span class="cat-badge-emoji">${c.emoji || '📦'}</span>`}
-        <div class="cat-badge-ring"></div>
-      </div>
-      <span class="cat-badge-label">${c.name}</span>
-    </div>`).join('');
-}
- 
-function filterByCat(slug, el) {
-  document.querySelectorAll('.cat-badge').forEach(b => b.classList.remove('active'));
-  if (el) el.classList.add('active');
-  document.getElementById('products-section').scrollIntoView({ behavior: 'smooth' });
-  filterProducts(slug === 'all' ? 'all' : slug, null);
-  // Sync filter bar
-  document.querySelectorAll('.filter-btn').forEach(b => {
-    b.classList.toggle('active', b.textContent.toLowerCase().includes(slug === 'all' ? 'all' : slug));
-  });
-}
- 
 document.addEventListener('DOMContentLoaded', init);
 </script>
- 
-<script>
-/* Nav scroll */
-window.addEventListener('scroll', () => {
-  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
-}, {passive: true});
- 
-/* Scroll reveal + badge stagger */
-(function(){
-  const revealIO = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('pg-in'); revealIO.unobserve(e.target); }
-    });
-  }, {threshold: 0.1});
- 
-  document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.pg-reveal').forEach(el => revealIO.observe(el));
- 
-    // Badge stagger via MutationObserver
-    const row = document.getElementById('cat-badges-row');
-    if (row) {
-      new MutationObserver(() => {
-        document.querySelectorAll('.cat-badge').forEach((b, i) =>
-          setTimeout(() => b.classList.add('pg-badge-in'), i * 110));
-      }).observe(row, {childList: true});
- 
-      new IntersectionObserver(entries => {
-        entries.forEach(e => {
-          if (e.isIntersecting)
-            document.querySelectorAll('.cat-badge').forEach((b,i) =>
-              setTimeout(() => b.classList.add('pg-badge-in'), i*100));
-        });
-      }, {threshold: 0.2}).observe(row);
-    }
-  });
-})();
-</script>
- 
 </body>
 </html>
+ 
