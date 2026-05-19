@@ -367,6 +367,16 @@
         <label>Payment Method</label>
         <div class="pay-opts" id="pay-opts"></div>
         <div class="pay-info" id="pay-info"></div>
+        <div id="txn-block" style="display:none;margin-top:10px">
+          <label id="txn-label" style="font-size:.85rem;font-weight:600;display:block;margin-bottom:4px">Transaction ID</label>
+          <input id="txn-id" type="text" placeholder="e.g. T20240001234567"
+            style="width:100%;padding:9px 12px;border:1px solid #ccc;border-radius:7px;font-size:.9rem;box-sizing:border-box"/>
+          <p style="font-size:.78rem;color:var(--mute);margin:5px 0 8px">Enter the transaction ID from your JazzCash/EasyPaisa SMS</p>
+          <a id="wa-link" href="#" target="_blank"
+            style="display:inline-flex;align-items:center;gap:6px;background:#25d366;color:#fff;padding:8px 16px;border-radius:7px;font-size:.85rem;font-weight:600;text-decoration:none">
+            📲 Send Screenshot via WhatsApp
+          </a>
+        </div>
       </div>
       <div class="err-msg" id="co-err"></div>
       <button type="submit" class="btn-full" id="co-btn">Place Order →</button>
@@ -594,34 +604,81 @@ function openCheckout(p) {
  
 function showPayInfo(method) {
   const box = document.getElementById('pay-info');
-  const info = {
-    JazzCash:  `Send to JazzCash: ${SETTINGS.jazzcash} (${SETTINGS.jazzcash_name || ''}) — then WhatsApp screenshot to ${SETTINGS.whatsapp}`,
-    EasyPaisa: `Send to EasyPaisa: ${SETTINGS.easypaisa} (${SETTINGS.easypaisa_name || ''}) — then WhatsApp screenshot to ${SETTINGS.whatsapp}`,
-    COD: 'Pay cash when your order arrives. Our team will call to confirm.'
-  };
-  box.textContent = info[method] || '';
+  const txnBlock = document.getElementById('txn-block');
+  const txnLabel = document.getElementById('txn-label');
+  document.getElementById('txn-id').value = '';
+  if (method === 'COD') {
+    box.innerHTML = '<strong>💵 Cash on Delivery:</strong> Pay when your order arrives. Our team will call to confirm.';
+    txnBlock.style.display = 'none';
+  } else if (method === 'JazzCash') {
+    box.innerHTML = `<strong>Step 1:</strong> Send <strong>Rs. ${selProduct ? Number(selProduct.price).toLocaleString() : '—'}</strong> to JazzCash <strong>${SETTINGS.jazzcash}</strong> (${SETTINGS.jazzcash_name || 'Store Owner'})<br><strong>Step 2:</strong> Enter your transaction ID below & send us the screenshot on WhatsApp.`;
+    txnLabel.textContent = 'JazzCash Transaction ID *';
+    txnBlock.style.display = 'block';
+  } else if (method === 'EasyPaisa') {
+    box.innerHTML = `<strong>Step 1:</strong> Send <strong>Rs. ${selProduct ? Number(selProduct.price).toLocaleString() : '—'}</strong> to EasyPaisa <strong>${SETTINGS.easypaisa}</strong> (${SETTINGS.easypaisa_name || 'Store Owner'})<br><strong>Step 2:</strong> Enter your transaction ID below & send us the screenshot on WhatsApp.`;
+    txnLabel.textContent = 'EasyPaisa Transaction ID *';
+    txnBlock.style.display = 'block';
+  }
   box.style.display = 'block';
+  updateWaLink();
+}
+
+function updateWaLink() {
+  const name = document.getElementById('o-name').value.trim() || '(name not entered)';
+  const phone = document.getElementById('o-phone').value.trim() || '(phone not entered)';
+  const pay = document.querySelector('input[name=pay]:checked')?.value || '';
+  const txn = document.getElementById('txn-id').value.trim() || '(not entered yet)';
+  const product = selProduct ? selProduct.name : '';
+  const msg = encodeURIComponent(`Hi PulseGear! I just placed an order.\n\nProduct: ${product}\nName: ${name}\nPhone: ${phone}\nPayment: ${pay}\nTransaction ID: ${txn}\n\nPlease find my payment screenshot attached.`);
+  document.getElementById('wa-link').href = `https://wa.me/${SETTINGS.whatsapp}?text=${msg}`;
 }
  
 async function placeOrder(e) {
   e.preventDefault();
   const pay = document.querySelector('input[name=pay]:checked')?.value;
   if (!pay) { showErr('co-err','Please select a payment method'); return; }
+
+  const needsTxn = pay === 'JazzCash' || pay === 'EasyPaisa';
+  const txnId = document.getElementById('txn-id').value.trim();
+  if (needsTxn && !txnId) {
+    showErr('co-err', `Please enter your ${pay} transaction ID before placing the order`);
+    document.getElementById('txn-id').focus();
+    return;
+  }
+
+  const name = document.getElementById('o-name').value.trim();
+  const phone = document.getElementById('o-phone').value.trim();
+  if (!/^03[0-9]{9}$/.test(phone.replace(/[-\s]/g,''))) {
+    showErr('co-err', 'Please enter a valid Pakistani mobile number (03XXXXXXXXX)');
+    return;
+  }
+
   const btn = document.getElementById('co-btn');
   btn.textContent = 'Processing...'; btn.disabled = true;
   const orderId = 'PG-' + Date.now().toString(36).toUpperCase();
   const { error } = await sb().from('orders').insert([{
-    order_id: orderId, user_id: currentUser.id, user_email: currentUser.email,
-    customer_name: document.getElementById('o-name').value.trim(),
-    phone: document.getElementById('o-phone').value.trim(),
+    order_id: orderId,
+    user_id: currentUser.id,
+    user_email: currentUser.email,
+    customer_name: name,
+    phone: phone,
     address: document.getElementById('o-address').value.trim(),
     payment_method: pay,
-    product_id: selProduct.id, product_name: selProduct.name, product_price: selProduct.price,
-    status: 'pending', created_at: new Date().toISOString()
+    transaction_id: txnId || null,
+    payment_status: needsTxn ? 'unverified' : 'verified',
+    product_id: selProduct.id,
+    product_name: selProduct.name,
+    product_price: selProduct.price,
+    status: 'pending',
+    created_at: new Date().toISOString()
   }]);
   if (error) { showErr('co-err', error.message); btn.textContent='Place Order →'; btn.disabled=false; return; }
   closeModal('checkout-modal');
   document.getElementById('suc-orderid').textContent = 'Order ID: ' + orderId;
+  const sucMsg = document.querySelector('#success-modal p');
+  if (sucMsg) sucMsg.textContent = needsTxn
+    ? `Your order is saved! Now please send your payment screenshot via WhatsApp to ${SETTINGS.whatsapp} to confirm your order.`
+    : "We'll contact you on your number shortly to confirm delivery.";
   document.getElementById('success-modal').style.display = 'flex';
 }
  
