@@ -47,6 +47,7 @@
       <div class="stats-grid">
         <div class="stat-card"><div class="stat-label">TOTAL ORDERS</div><div class="stat-val" id="s-total">—</div></div>
         <div class="stat-card"><div class="stat-label">PENDING</div><div class="stat-val" id="s-pending" style="color:var(--y)">—</div></div>
+        <div class="stat-card"><div class="stat-label">⚠ UNVERIFIED PAY</div><div class="stat-val" id="s-unverified" style="color:var(--p)">—</div></div>
         <div class="stat-card"><div class="stat-label">DELIVERED</div><div class="stat-val" id="s-delivered" style="color:var(--g)">—</div></div>
         <div class="stat-card"><div class="stat-label">TOTAL REVENUE</div><div class="stat-val" id="s-revenue">—</div></div>
         <div class="stat-card"><div class="stat-label">PRODUCTS</div><div class="stat-val" id="s-prods" style="color:var(--c)">—</div></div>
@@ -72,12 +73,13 @@
           <option value="shipped">SHIPPED</option>
           <option value="delivered">DELIVERED</option>
           <option value="cancelled">CANCELLED</option>
+          <option value="unverified">⚠ UNVERIFIED PAYMENT</option>
         </select>
         <button class="btn btn-sm" onclick="exportOrdersCSV()">⬇ EXPORT CSV</button>
       </div>
       <div style="overflow-x:auto"><table class="tbl">
-        <thead><tr><th>ORDER ID</th><th>CUSTOMER</th><th>PHONE</th><th>ADDRESS</th><th>PRODUCT</th><th>PRICE</th><th>PAYMENT</th><th>DATE</th><th>STATUS</th><th>ACTION</th></tr></thead>
-        <tbody id="orders-body"><tr><td colspan="10" style="text-align:center;color:var(--mute)">LOADING...</td></tr></tbody>
+        <thead><tr><th>ORDER ID</th><th>CUSTOMER</th><th>PHONE</th><th>ADDRESS</th><th>PRODUCT</th><th>PRICE</th><th>PAYMENT</th><th>TXN ID</th><th>PAY STATUS</th><th>DATE</th><th>STATUS</th><th>ACTION</th></tr></thead>
+        <tbody id="orders-body"><tr><td colspan="12" style="text-align:center;color:var(--mute)">LOADING...</td></tr></tbody>
       </table></div>
     </div>
  
@@ -377,6 +379,7 @@ async function loadOverview() {
   const delivered = orders.filter(o=>o.status==='delivered');
   document.getElementById('s-total').textContent     = orders.length;
   document.getElementById('s-pending').textContent   = orders.filter(o=>o.status==='pending').length;
+  document.getElementById('s-unverified').textContent = orders.filter(o=>o.payment_status==='unverified').length;
   document.getElementById('s-delivered').textContent = delivered.length;
   document.getElementById('s-revenue').textContent   = 'Rs.'+delivered.reduce((s,o)=>s+(o.product_price||0),0).toLocaleString();
   document.getElementById('s-prods').textContent     = prods?.length || 0;
@@ -395,7 +398,11 @@ async function loadOverview() {
 async function loadOrders() {
   const filter = document.getElementById('order-filter')?.value || 'all';
   let query = sb().from('orders').select('*').order('created_at',{ascending:false});
-  if (filter !== 'all') query = query.eq('status', filter);
+  if (filter === 'unverified') {
+    query = query.eq('payment_status', 'unverified');
+  } else if (filter !== 'all') {
+    query = query.eq('status', filter);
+  }
   const { data } = await query;
   allOrders = data || [];
   renderOrders(allOrders);
@@ -412,27 +419,41 @@ function searchOrders() {
  
 function renderOrders(orders) {
   document.getElementById('orders-body').innerHTML = !orders.length
-    ? `<tr><td colspan="10" style="text-align:center;color:var(--mute);padding:30px">// NO ORDERS</td></tr>`
-    : orders.map(o=>`<tr id="row-${o.id}">
-        <td style="color:var(--c);font-size:.68rem">${o.order_id}</td>
-        <td>${o.customer_name}</td>
-        <td style="font-family:var(--F2)">${o.phone}</td>
-        <td style="max-width:130px;font-size:.72rem;color:var(--mute)">${o.address}</td>
-        <td>${o.product_name}</td>
-        <td style="color:var(--y)">Rs.${(o.product_price||0).toLocaleString()}</td>
-        <td>${o.payment_method}</td>
-        <td style="font-size:.7rem;color:var(--mute)">${new Date(o.created_at).toLocaleDateString('en-PK')}</td>
-        <td><span class="badge-status s-${o.status}" id="badge-${o.id}">${o.status.toUpperCase()}</span></td>
-        <td style="display:flex;gap:6px;flex-wrap:wrap">
-          <button class="btn btn-sm" onclick="openOrderModal('${o.id}')">MANAGE</button>
-          <button class="btn btn-p btn-sm" onclick="deleteOrder('${o.id}','${o.order_id}')">DELETE</button>
-        </td>
-      </tr>`).join('');
+    ? `<tr><td colspan="12" style="text-align:center;color:var(--mute);padding:30px">// NO ORDERS</td></tr>`
+    : orders.map(o=>{
+        const payBadge = o.payment_method === 'COD'
+          ? `<span style="color:var(--g);font-family:var(--F2);font-size:.65rem">COD</span>`
+          : o.payment_status === 'verified'
+            ? `<span style="color:var(--g);font-family:var(--F2);font-size:.65rem">✓ VERIFIED</span>`
+            : `<span style="color:var(--y);font-family:var(--F2);font-size:.65rem">⚠ UNVERIFIED</span>`;
+        return `<tr id="row-${o.id}">
+          <td style="color:var(--c);font-size:.68rem">${o.order_id}</td>
+          <td>${o.customer_name}</td>
+          <td style="font-family:var(--F2)">${o.phone}</td>
+          <td style="max-width:130px;font-size:.72rem;color:var(--mute)">${o.address}</td>
+          <td>${o.product_name}</td>
+          <td style="color:var(--y)">Rs.${(o.product_price||0).toLocaleString()}</td>
+          <td>${o.payment_method}</td>
+          <td style="font-family:var(--F2);font-size:.68rem;color:var(--c)">${o.transaction_id || '<span style="color:var(--mute)">—</span>'}</td>
+          <td>${payBadge}</td>
+          <td style="font-size:.7rem;color:var(--mute)">${new Date(o.created_at).toLocaleDateString('en-PK')}</td>
+          <td><span class="badge-status s-${o.status}" id="badge-${o.id}">${o.status.toUpperCase()}</span></td>
+          <td style="display:flex;gap:6px;flex-wrap:wrap">
+            <button class="btn btn-sm" onclick="openOrderModal('${o.id}')">MANAGE</button>
+            <button class="btn btn-p btn-sm" onclick="deleteOrder('${o.id}','${o.order_id}')">DELETE</button>
+          </td>
+        </tr>`;
+      }).join('');
 }
  
 function openOrderModal(id) {
   const o = allOrders.find(x=>x.id===id);
   if (!o) return;
+  const payStatusHtml = o.payment_method === 'COD'
+    ? `<span style="color:var(--g)">CASH ON DELIVERY</span>`
+    : o.payment_status === 'verified'
+      ? `<span style="color:var(--g)">✓ VERIFIED</span>`
+      : `<span style="color:var(--y)">⚠ UNVERIFIED — check WhatsApp screenshot</span>`;
   document.getElementById('order-modal-body').innerHTML = `
     <div style="font-family:var(--F2);font-size:.8rem;line-height:2.1;background:rgba(0,245,255,.04);border:1px solid rgba(0,245,255,.1);padding:14px">
       <div><span style="color:var(--mute)">ORDER ID:</span> <span style="color:var(--c)">${o.order_id}</span></div>
@@ -442,15 +463,30 @@ function openOrderModal(id) {
       <div><span style="color:var(--mute)">PRODUCT:</span> ${o.product_name}</div>
       <div><span style="color:var(--mute)">PRICE:</span> <span style="color:var(--y)">Rs. ${(o.product_price||0).toLocaleString()}</span></div>
       <div><span style="color:var(--mute)">PAYMENT:</span> ${o.payment_method}</div>
+      <div><span style="color:var(--mute)">TXN ID:</span> <span style="color:var(--c)">${o.transaction_id || '—'}</span></div>
+      <div><span style="color:var(--mute)">PAY STATUS:</span> ${payStatusHtml}</div>
       <div><span style="color:var(--mute)">DATE:</span> ${new Date(o.created_at).toLocaleString('en-PK')}</div>
-      <div><span style="color:var(--mute)">STATUS:</span> <span class="badge-status s-${o.status}">${o.status.toUpperCase()}</span></div>
+      <div><span style="color:var(--mute)">ORDER STATUS:</span> <span class="badge-status s-${o.status}">${o.status.toUpperCase()}</span></div>
     </div>`;
+  const verifyBtn = (o.payment_method !== 'COD' && o.payment_status !== 'verified')
+    ? `<button class="btn btn-g btn-sm" onclick="verifyPayment('${o.id}')">✓ VERIFY PAYMENT</button>`
+    : '';
   document.getElementById('order-modal-actions').innerHTML = `
+    ${verifyBtn}
     <button class="btn btn-sm" onclick="updateStatus('${o.id}','pending')">PENDING</button>
     <button class="btn btn-sm" onclick="updateStatus('${o.id}','shipped')">MARK SHIPPED</button>
     <button class="btn btn-g btn-sm" onclick="updateStatus('${o.id}','delivered')">✓ DELIVERED</button>
     <button class="btn btn-p btn-sm" onclick="updateStatus('${o.id}','cancelled')">CANCEL</button>`;
   document.getElementById('order-modal').style.display = 'flex';
+}
+
+async function verifyPayment(id) {
+  const { error } = await sb().from('orders').update({ payment_status: 'verified' }).eq('id', id);
+  if (error) { alert(error.message); return; }
+  const idx = allOrders.findIndex(o=>o.id===id);
+  if (idx !== -1) allOrders[idx].payment_status = 'verified';
+  closeModal('order-modal');
+  renderOrders(allOrders);
 }
  
 async function updateStatus(id, status) {
